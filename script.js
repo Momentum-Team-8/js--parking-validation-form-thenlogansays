@@ -11,6 +11,7 @@ const carModelInput = document.querySelector('#car-model')
 const startDateInput = document.querySelector('#start-date')
 const daysInput = document.querySelector('#days')
 const credtCardInput = document.querySelector('#credit-card')
+const row = document.querySelector('.row')
 const cvvInput = document.querySelector('#cvv')
 const expirationInput = document.querySelector('#expiration')
 //set all of the variable definitions
@@ -29,15 +30,15 @@ form.addEventListener('submit', event => {
     validateStartDateInput()
     validateDaysInput()
     //validatecreditCardInput()
-    //validatecvvInput()
+    validateCVVInput()
     //validateexpirationDateInput()
 
     if (formIsValid) {
         document.querySelector('#name-field').classList.add('input-valid')
         document.querySelector('.input-group').classList.add('input-valid')
-        //document.querySelector('#start-date-field').classList.add('input-valid')
-       // document.querySelector('#days-field').classList.add('input-valid')
-        
+        document.querySelector('#start-date-field').classList.add('input-valid')
+        document.querySelector('#days-field').classList.add('input-valid')
+        document.querySelector('#cvv-field').classList.add('input-valid')
     }
 })
 
@@ -98,6 +99,25 @@ function validateDaysInput() {
         formisValid = true
     }
 }
+
+function validateCVVInput() {
+    if (cvvInput.value === '') {
+        const error = document.createElement('div')
+
+        document.querySelector('#cvv-field').classList.add('input-invalid')
+        document.querySelector('#cvv').appendChild(error).innerHTML('CVV must be three numbers between 0-9.')
+        formisValid = false
+    }
+    else {
+        formIsValid = true
+    }
+}
+
+//cvvInput.oninvalid = function(event) {
+ //   event.target.setCustomValidity('CVV must be three numbers between 0-9.')
+//}
+
+ 
 
 
 
