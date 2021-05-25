@@ -3,17 +3,22 @@
 let formIsValid;
 //set up boolean to see if form is valid
 
+
 const form = document.querySelector('#parking-form')
 const nameInput = document.querySelector('#name')
 const carYearInput = document.querySelector('#car-year')
 const carMakeInput = document.querySelector('#car-make')
 const carModelInput = document.querySelector('#car-model')
 const startDateInput = document.querySelector('#start-date')
-const daysInput = document.querySelector('#days')
+const daysInput = document.querySelector('#days').value
 const credtCardInput = document.querySelector('#credit-card')
 const row = document.querySelector('.row')
 const cvvInput = document.querySelector('#cvv')
 const expirationInput = document.querySelector('#expiration')
+
+const total = document.querySelector('#total')
+const totalCost = daysInput.value * 5
+
 //set all of the variable definitions
 
 
@@ -29,7 +34,7 @@ form.addEventListener('submit', event => {
     validateCarYearInput()
     validateStartDateInput()
     validateDaysInput()
-    //validatecreditCardInput()
+    validateCreditCardInput()
     validateCVVInput()
     //validateexpirationDateInput()
 
@@ -39,6 +44,7 @@ form.addEventListener('submit', event => {
         document.querySelector('#start-date-field').classList.add('input-valid')
         document.querySelector('#days-field').classList.add('input-valid')
         document.querySelector('#cvv-field').classList.add('input-valid')
+        document.querySelector('#total').appendChild(total).innerHTML = ("Total Cost is $" + totalCost)
     }
 })
 
@@ -112,6 +118,30 @@ function validateCVVInput() {
         formIsValid = true
     }
 }
+
+
+function validateCreditCardInput() {
+            var regex = new RegExp("^[0-9]{16}$");
+        if (!regex.test(credtCardInput.value) === true )
+            return false;
+    
+        return luhnCheck(number);
+    }
+    
+    function luhnCheck(val) {
+        var sum = 0;
+        for (var i = 0; i < val.length; i++) {
+            var intVal = parseInt(val.substr(i, 1));
+            if (i % 2 == 0) {
+                intVal *= 2;
+                if (intVal > 9) {
+                    intVal = 1 + (intVal % 10);
+                }
+            }
+            sum += intVal;
+        }
+        return (sum % 10) == 0;
+    }
 
 //cvvInput.oninvalid = function(event) {
  //   event.target.setCustomValidity('CVV must be three numbers between 0-9.')
